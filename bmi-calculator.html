@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMI 計算機</title>
+    <title>BMI 閮?璈?/title>
     <style>
         * {
             box-sizing: border-box;
@@ -121,25 +121,25 @@
 </head>
 <body>
     <main class="card">
-        <h1>BMI 計算機</h1>
-        <p class="description">輸入身高與體重，計算你的 BMI</p>
+        <h1>BMI 閮?璈?/h1>
+        <p class="description">頛詨頨恍?????閮?雿? BMI</p>
 
         <form id="bmi-form">
             <div class="field">
-                <label for="height">身高（公分）</label>
-                <input id="height" name="height" type="number" min="1" max="300" step="any" placeholder="例如：170" required>
+                <label for="height">頨恍?嚗??</label>
+                <input id="height" name="height" type="number" min="1" max="300" step="any" placeholder="靘?嚗?70" required>
             </div>
             <div class="field">
-                <label for="weight">體重（公斤）</label>
-                <input id="weight" name="weight" type="number" min="1" max="500" step="any" placeholder="例如：60" required>
+                <label for="weight">擃?嚗?歹?</label>
+                <input id="weight" name="weight" type="number" min="1" max="500" step="any" placeholder="靘?嚗?0" required>
             </div>
-            <button type="submit">計算 BMI</button>
+            <button type="submit">閮? BMI</button>
         </form>
 
         <section id="result" class="result" aria-live="polite">
-            <p>請輸入資料後按下計算</p>
+            <p>隢撓?亥?????閮?</p>
         </section>
-        <p class="note">成人 BMI 分類：過輕 &lt; 18.5、正常 18.5–24、過重 24–27、肥胖 ≥ 27。此結果僅供參考，不取代專業醫療建議。</p>
+        <p class="note">?犖 BMI ??嚗?頛?&lt; 18.5?迤撣?18.5??4????24??7?????27?迨蝯?????銝?隞??璆剝?遣霅啜?/p>
     </main>
 
     <script>
@@ -153,7 +153,7 @@
             const weightKg = Number(document.getElementById('weight').value);
 
             if (!Number.isFinite(heightCm) || !Number.isFinite(weightKg) || heightCm <= 0 || weightKg <= 0) {
-                result.innerHTML = '<p class="error">請輸入有效的身高與體重。</p>';
+                result.innerHTML = '<p class="error">隢撓?交???頨恍?????/p>';
                 return;
             }
 
@@ -162,16 +162,16 @@
             let category;
 
             if (bmi < 18.5) {
-                category = '過輕';
+                category = '??';
             } else if (bmi < 24) {
-                category = '正常';
+                category = '甇?虜';
             } else if (bmi < 27) {
-                category = '過重';
+                category = '??';
             } else {
-                category = '肥胖';
+                category = '?亥?';
             }
 
-            result.innerHTML = `<p>你的 BMI 是 <span class="bmi-value">${bmi.toFixed(1)}</span></p><p>分類：${category}</p>`;
+            result.innerHTML = `<p>雿? BMI ??<span class="bmi-value">${bmi.toFixed(1)}</span></p><p>??嚗?{category}</p>`;
         });
     </script>
 </body>
