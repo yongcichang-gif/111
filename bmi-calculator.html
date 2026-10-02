@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI 計算機</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px;
+            display: grid;
+            place-items: center;
+            background: radial-gradient(ellipse at top, #182b3a 0%, #0b1120 55%, #070b14 100%);
+            color: #e2e8f0;
+            color-scheme: dark;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        .card {
+            width: min(100%, 420px);
+            padding: 32px;
+            border-radius: 20px;
+            background: #111c2e;
+            border: 1px solid #26364d;
+            box-shadow: 0 20px 50px rgb(0 0 0 / 35%);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .description {
+            margin: 0 0 28px;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #3b4b63;
+            border-radius: 10px;
+            background: #0b1220;
+            color: #e2e8f0;
+            font: inherit;
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        input:focus {
+            border-color: #38bdf8;
+            outline: 3px solid rgb(56 189 248 / 18%);
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: 0;
+            border-radius: 10px;
+            background: #0ea5e9;
+            color: #082f49;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #38bdf8;
+        }
+
+        .result {
+            min-height: 72px;
+            margin-top: 22px;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #26364d;
+            background: #0b1220;
+            text-align: center;
+        }
+
+        .result p {
+            margin: 4px 0;
+        }
+
+        .bmi-value {
+            color: #38bdf8;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .error {
+            color: #b91c1c;
+        }
+
+        .note {
+            margin: 18px 0 0;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <h1>BMI 計算機</h1>
+        <p class="description">輸入身高與體重，計算你的 BMI</p>
+
+        <form id="bmi-form">
+            <div class="field">
+                <label for="height">身高（公分）</label>
+                <input id="height" name="height" type="number" min="1" max="300" step="any" placeholder="例如：170" required>
+            </div>
+            <div class="field">
+                <label for="weight">體重（公斤）</label>
+                <input id="weight" name="weight" type="number" min="1" max="500" step="any" placeholder="例如：60" required>
+            </div>
+            <button type="submit">計算 BMI</button>
+        </form>
+
+        <section id="result" class="result" aria-live="polite">
+            <p>請輸入資料後按下計算</p>
+        </section>
+        <p class="note">成人 BMI 分類：過輕 &lt; 18.5、正常 18.5–24、過重 24–27、肥胖 ≥ 27。此結果僅供參考，不取代專業醫療建議。</p>
+    </main>
+
+    <script>
+        const form = document.getElementById('bmi-form');
+        const result = document.getElementById('result');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const heightCm = Number(document.getElementById('height').value);
+            const weightKg = Number(document.getElementById('weight').value);
+
+            if (!Number.isFinite(heightCm) || !Number.isFinite(weightKg) || heightCm <= 0 || weightKg <= 0) {
+                result.innerHTML = '<p class="error">請輸入有效的身高與體重。</p>';
+                return;
+            }
+
+            const heightM = heightCm / 100;
+            const bmi = weightKg / (heightM * heightM);
+            let category;
+
+            if (bmi < 18.5) {
+                category = '過輕';
+            } else if (bmi < 24) {
+                category = '正常';
+            } else if (bmi < 27) {
+                category = '過重';
+            } else {
+                category = '肥胖';
+            }
+
+            result.innerHTML = `<p>你的 BMI 是 <span class="bmi-value">${bmi.toFixed(1)}</span></p><p>分類：${category}</p>`;
+        });
+    </script>
+</body>
+</html>
